@@ -1,0 +1,41 @@
+{   
+    "name": "sake",
+    "description": "Mainline your node JavaScript for universal consumption.",
+    "version": "0.0.1",
+    "keywords": [
+        "build"
+    ],
+    "main": "./lib/node_modules/sake/sake",
+    "bin": {
+        "infuse": "./bin/sake"
+    },
+    "directories": {
+        "lib": "lib"
+    },
+    "dependencies": {
+        "nomnom":    ">=1.5.x",
+        "proteus":   ">=0.0.x",
+        "wordwrap":  ">=0.0.2"
+    },
+    "devDependencies": {
+        "mocha":      ">=0.3.x",
+        "should":     ">=0.5.x"
+    },
+    "scripts": {
+        "test": "mocha test/test-*"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "http://github.com/jhamlet/node-sake/raw/master/LICENSE"
+        }
+    ],
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/jhamlet/node-sake.git"
+    },
+    "bugs": {
+        "url": "http://github.com/jhamlet/node-sake/issues"
+    },
+    "preferGlobal": true
+}
