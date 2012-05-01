@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-require("../lib/cli-app").run();
+require("../lib/node_modules/sake/cli-app").run();
