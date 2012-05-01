@@ -5,7 +5,7 @@
     "keywords": [
         "build"
     ],
-    "main": "./lib/node_modules/sake/sake",
+    "main": "./lib/node_modules/sake/index.js",
     "bin": {
         "infuse": "./bin/sake"
     },
@@ -13,9 +13,11 @@
         "lib": "lib"
     },
     "dependencies": {
-        "nomnom":    ">=1.5.x",
-        "proteus":   ">=0.0.x",
-        "wordwrap":  ">=0.0.2"
+        "nomnom":   ">=1.5.x",
+        "async":    ">=1.1.x",
+        "resolve":  ">=0.2.x",
+        "proteus":  ">=0.0.x",
+        "wordwrap": ">=0.0.2"
     },
     "devDependencies": {
         "mocha":      ">=0.3.x",
