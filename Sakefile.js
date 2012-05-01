@@ -18,15 +18,18 @@ task("two", function (t) {
     t.done();
 });
 
+directory("tmp/path/directory");
+CLOBBER.include("tmp");
+
 desc("Test text file.");
-file("test.txt", ["LICENSE"], function (t) {
+fileSync("tmp/path/directory/test.txt", ["tmp/path/directory", "LICENSE"], function (t) {
     console.log(t.name);
-    write(t.name, read(t.prerequisites[0], "utf8"), "utf8");
-    t.done();
+    write(t.name, read(t.prerequisites[1], "utf8"), "utf8");
 });
+CLEAN.include("tmp/path/directory/test.txt");
 
 desc("Default task.");
-task("default", ["test.txt"]);
+task("default", ["tmp/path/directory/test.txt"]);
 
 taskSync("testSync", function (t) {
     console.log(t.name);
