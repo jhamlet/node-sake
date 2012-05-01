@@ -2,7 +2,9 @@
 var Path    = require("path"),
     futil   = require("sake/file-utils"),
     files   = new FileList("**/*", "some/non-existing/file.js"),
-    authorInfo
+    authorInfo,
+    buildStart,
+    buildComplete
 ;
 
 desc("Keep the LICENSE file up-to-date.");
@@ -23,11 +25,18 @@ taskSync("read-authors", ["AUTHORS"], function (t) {
 });
 
 taskSync("pre-build", function (t) {
+    buildStart = Date.now();
     log("Starting build...");
 });
 
 taskSync("build", ["pre-build", "LICENSE"], function (t) {
+    var delta;
+    
+    buildComplete = Date.now();
+    delta = buildComplete - buildStart;
+    
     log("Build complete");
+    log(delta + " ms");
 });
 
 taskSync("default", ["build"]);
