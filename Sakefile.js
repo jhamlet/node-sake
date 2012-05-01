@@ -19,7 +19,9 @@ file("test.txt", ["LICENSE"], function (t) {
     write(t.name, read(t.prerequisites[0], "utf8"), "utf8");
 });
 
+task("default", ["test.txt"]);
+
 // console.log(task("one").prerequisites.length);
 // console.log(Object.keys(Task.tasks));
-console.log(Task.tasks);
+// console.log(Task.tasks);
 // console.log(Task.get("one") + "");
