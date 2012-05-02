@@ -1,4 +1,4 @@
-/*globals desc, task, taskSync, file, directory, fileSync, FileList, CLOBBER, CLEAN, write, read, log */
+/*globals desc, task, taskSync, file, directory, fileSync, FileList, CLOBBER, CLEAN, spit, slurp, log, sh */
 var Path        = require("path"),
     authorInfo  = read("AUTHORS", "utf8").split("\n")[0],
     buildStart  = new Date(),
@@ -10,7 +10,6 @@ var Path        = require("path"),
 // Defines the CLEAN file-list and the 'clean' task
 //---------------------------------------------------------------------------
 require("sake/clean");
-CLEAN.include("README.md");
 //---------------------------------------------------------------------------
 // Overall build tasks
 //---------------------------------------------------------------------------
@@ -49,9 +48,27 @@ readMeFiles.include(
     "LICENSE", "AUTHORS", "Sakefile.*"
 );
 
-fileSync("README.md", readMeFiles, function (t) {
-    log("Update " + t.name);
+desc("Generate the README.md documentation");
+file("README.md", readMeFiles, function (t) {
+    var _ = require("underscore"),
+        pkgInfo = JSON.parse(slurp("package.json", "utf8")),
+        tmpl = _.template(slurp(t.prerequisites[0], "utf8")),
+        tmplParams = {
+            pkg: pkgInfo,
+            license: slurp("./LICENSE", "utf8"),
+            usage: ""
+        }
+    ;
+    
+    sh("./bin/sake -h", function (err, txt) {
+        tmplParams.usage = txt.split("\n").slice(1, -2).join("\n");
+        spit(t.name, tmpl(tmplParams), "utf8");
+        log("Update " + t.name);
+        t.done();
+    });
+    
 });
+CLEAN.include("README.md");
 //---------------------------------------------------------------------------
 // link up
 //---------------------------------------------------------------------------

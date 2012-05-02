@@ -23,3 +23,6 @@ taskSync("globalized", function (t) {
 });
 task("default", ["globalized"]);
 
+taskSync("contextualized", fooPlus);
+task("default", ["contextualized"]);
+
