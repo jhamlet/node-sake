@@ -1,21 +1,19 @@
-<%  scriptName = "saké";
-    ScriptName = scriptName[0].toUpperCase() + scriptName.slice(1)
-%>
+
 Saké
 ====
 
-> <%= pkg.description %>
+> [S]cripted-r[ake] -- a JavaScript build tool similar to rake, or make.
 
 NOTE
 ----
 
 > This documentation is currently in flux as it is converted from its original project.
 
-This package contains **<%= scriptName %>**, a JavaScript build program that runs in node with capabilities similar to ruby's Rake.
+This package contains **saké**, a JavaScript build program that runs in node with capabilities similar to ruby's Rake.
 
-<%= ScriptName %> has the following features:
+Saké has the following features:
 
-1.  Sakefiles (<%= scriptName %>’s version of Rakefiles) are completely defined in standard JavaScript (or CoffeeScript, for those who want an even more Rake-like feel).
+1.  Sakefiles (saké’s version of Rakefiles) are completely defined in standard JavaScript (or CoffeeScript, for those who want an even more Rake-like feel).
 2.  Flexible FileLists that act like arrays but know about manipulating file names and paths.
 3.  Standard `clean` and `clobber` tasks are available for requiring.
 4.  Handling of *Synchronous* and *Asynchronous* tasks.
@@ -39,38 +37,44 @@ Command-Line Usage
 ~~~
 % sake -h
 
-<%= usage %>
+usage: sake TASK [ARGUMENTS ...] [ENV=VALUE ...] [options]
+
+TASK         Name of the task to run. Defaults to 'default'.
+[ARGUMENTS ...]     Zero or more arguments to pass to the task invokation.
+[ENV=VALUE ...]     Zero or more arguments to translate into environment variables.
+
+options:
+   -f, --sakefile PATH   Specify PATH to Sakefile to run instead of searching for one.
+   -T, --tasks           List tasks with descriptions and exit.
+   -P, --prerequisites   List tasks and their prerequisites and exit.
+   -d, --debug           Enable additional debugging output.
+   -q, --quiet           Suppress messages to standard output.
+   -V, --version         Print the version of sake and exit.
+   -h, --help            Print this help information and exit.
+
 ~~~
 
 ### Dependencies ###
 
-These are installed when **<%=pkg.name%>** is installed.
-<% var  fw = Object.keys(pkg.dependencies).reduce(function (t, c) {
-            var len = c.length;
-            return len > t ? len : t;
-        }, 0),
-        deps = Object.keys(pkg.dependencies).map(function (key) {
-            var pad = Array(fw - key.length + 1).join(" ");
-            return key + ": " + pad + pkg.dependencies[key];
-        }).join("\n");%>
+These are installed when **sake** is installed.
+
 ~~~
-<%=deps%>
+nomnom:   >=1.5.x
+async:    >=1.1.x
+resolve:  >=0.2.x
+proteus:  >=0.0.x
+wordwrap: >=0.0.2
 ~~~
 
 
 ### Development Dependencies ###
 
 Installed when you run `npm link` in the package directory.
-<% var  fw = Object.keys(pkg.devDependencies).reduce(function (t, c) {
-            var len = c.length;
-            return len > t ? len : t;
-        }, 0),
-        devDeps = Object.keys(pkg.devDependencies).map(function (key) {
-            var pad = Array(fw - key.length + 1).join(" ");
-            return key + ": " + pad + pkg.devDependencies[key];
-        }).join("\n");%>
+
 ~~~
-<%=devDeps%>
+mocha:      >=0.3.x
+should:     >=0.5.x
+underscore: >=1.3.x
 ~~~
 
 
