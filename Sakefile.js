@@ -1,7 +1,5 @@
 /*globals desc, task, taskSync, file, directory, fileSync, FileList, CLOBBER, CLEAN, write, read, log */
-var Path    = require("path"),
-    futil   = require("sake/file-utils"),
-    files   = new FileList("**/*", "some/non-existing/file.js"),
+var Path = require("path"),
     authorInfo,
     buildStart,
     buildComplete
