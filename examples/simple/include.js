@@ -1,0 +1,2 @@
+
+taskSync("include", logNameAction);
