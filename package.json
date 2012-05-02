@@ -1,6 +1,6 @@
 {   
     "name": "sake",
-    "description": "Mainline your node JavaScript for universal consumption.",
+    "description": "[S]cripted-r[ake] -- a JavaScript build tool similar to rake, or make.",
     "version": "0.1.0",
     "keywords": [
         "build"
