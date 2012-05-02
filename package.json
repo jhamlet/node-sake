@@ -3,7 +3,10 @@
     "description": "[S]cripted-r[ake] -- a JavaScript build tool similar to rake, or make.",
     "version": "0.1.0",
     "keywords": [
-        "build"
+        "build",
+        "make",
+        "rake",
+        "jake"
     ],
     "main": "./lib/node_modules/sake/index.js",
     "bin": {
