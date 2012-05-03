@@ -2,7 +2,7 @@
 Saké
 ====
 
-> [S]cripted-r[ake] -- a JavaScript build tool similar to rake, or make.
+> [S]cripted-r[ake] -- a better JavaScript build tool similar to rake, or make.
 
 NOTE
 ----
@@ -46,6 +46,7 @@ usage: sake [TASK] [ARGUMENTS ...] [ENV=VALUE ...] [options]
 options:
    -f, --sakefile PATH    Specify PATH to Sakefile to run instead of searching for
                           one.
+   -n, --dry-run          Do a dry run without executing actions.
    -T, --tasks            List tasks with descriptions and exit.
    -P, --prerequisites    List tasks and their prerequisites and exit.
    -r, --require MODULE   Require MODULE before executing Sakefile and expose the
