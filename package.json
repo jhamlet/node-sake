@@ -10,14 +10,14 @@
     ],
     "main": "./lib/node_modules/sake/index.js",
     "bin": {
-        "infuse": "./bin/sake"
+        "sake": "./bin/sake"
     },
     "directories": {
         "lib": "lib"
     },
     "dependencies": {
         "nomnom":   ">=1.5.x",
-        "async":    ">=1.1.x",
+        "async":    ">=0.1.18",
         "resolve":  ">=0.2.x",
         "proteus":  ">=0.0.x",
         "wordwrap": ">=0.0.2"
