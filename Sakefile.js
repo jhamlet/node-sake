@@ -14,7 +14,7 @@ require("sake/clean");
 // Overall build tasks
 //---------------------------------------------------------------------------
 taskSync("pre-build", function (t) {
-    log("Starting build at " + buildStart);
+    log.info("Starting build at " + buildStart);
 });
 
 taskSync("build", ["pre-build"], function (t) {
@@ -23,8 +23,8 @@ taskSync("build", ["pre-build"], function (t) {
     buildComplete = new Date();
     delta = buildComplete.getTime() - buildStart.getTime();
     
-    log("Build complete at " + buildComplete);
-    log(delta + " ms");
+    log.info("Build complete at " + buildComplete);
+    log.info(delta + " ms");
 });
 //---------------------------------------------------------------------------
 // LICENSE
@@ -38,7 +38,7 @@ fileSync("LICENSE", ["AUTHORS"], function (t) {
     license[0] = "Copyright (c) " + year + " " + authorInfo;
     
     write(t.name, license.join("\n"), "utf8");
-    log(t.name + " updated");
+    log.info(t.name + " updated");
 });
 //---------------------------------------------------------------------------
 // README file
@@ -63,7 +63,7 @@ file("README.md", readMeFiles, function (t) {
     sh("./bin/sake -h", function (err, txt) {
         tmplParams.usage = txt.split("\n").slice(1, -2).join("\n");
         spit(t.name, tmpl(tmplParams), "utf8");
-        log("Update " + t.name);
+        log.info("Update " + t.name);
         t.done();
     });
     

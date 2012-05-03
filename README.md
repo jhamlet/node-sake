@@ -37,20 +37,26 @@ Command-Line Usage
 ~~~
 % sake -h
 
-usage: sake TASK [ARGUMENTS ...] [ENV=VALUE ...] [options]
+usage: sake [TASK] [ARGUMENTS ...] [ENV=VALUE ...] [options]
 
-TASK         Name of the task to run. Defaults to 'default'.
-[ARGUMENTS ...]     Zero or more arguments to pass to the task invokation.
+[TASK]       Name of the task to run. Defaults to 'default'.
+[ARGUMENTS ...]     Zero or more arguments to pass to the task invoked.
 [ENV=VALUE ...]     Zero or more arguments to translate into environment variables.
 
 options:
-   -f, --sakefile PATH   Specify PATH to Sakefile to run instead of searching for one.
-   -T, --tasks           List tasks with descriptions and exit.
-   -P, --prerequisites   List tasks and their prerequisites and exit.
-   -d, --debug           Enable additional debugging output.
-   -q, --quiet           Suppress messages to standard output.
-   -V, --version         Print the version of sake and exit.
-   -h, --help            Print this help information and exit.
+   -f, --sakefile PATH    Specify PATH to Sakefile to run instead of searching for
+                          one.
+   -T, --tasks            List tasks with descriptions and exit.
+   -P, --prerequisites    List tasks and their prerequisites and exit.
+   -r, --require MODULE   Require MODULE before executing Sakefile and expose the
+                          MODULE under a sanitized namespace (i.e.: coffee-script =>
+                          [sake.]coffeeScript).
+   -S, --synchronous      Make all tasks 'synchronous' by default. Use 'taskAsync' to
+                          define an asynchronous task.
+   -d, --debug            Enable additional debugging output.
+   -q, --quiet            Suppress informational messages.
+   -V, --version          Print the version of sake and exit.
+   -h, --help             Print this help information and exit.
 
 ~~~
 
