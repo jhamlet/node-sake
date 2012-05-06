@@ -9,13 +9,6 @@ var should   = require("should"),
 
 suite("Sake FileList", function () {
     
-    test("Exists", function () {
-        var fl = new FileList();
-        
-        should.exist(fl);
-        fl.should.be.instanceof(FileList);
-    });
-
     test("Include Glob", function () {
         var fl = new FileList();
         

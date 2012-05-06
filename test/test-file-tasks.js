@@ -1,18 +1,23 @@
+/*globals suite, test, setup, teardown, directory, file, task, read, write, CLOBBER, CLEAN*/
 
 var should  = require("should"),
     Path    = require("path"),
     FS      = require("fs"),
     sake    = require("../"),
-    futil   = require("../lib/node_modules/sake/file-utils")
+    futil   = require("../lib/node_modules/sake/file-utils"),
+    cwd     = process.cwd()
 ;
-// Setup
+//---------------------------------------------------------------------------
+// SETUP
+//---------------------------------------------------------------------------
 process.chdir(__dirname); // Gets us in the right directory
 sake.options.quiet = true; // Turn off sake info messages
-// Runs the function in sake context
+// Runs the function in sake context. The function **does not** have access to
+// this local scope.
 sake.run(function () {
     require("sake/clobber");
     
-    directory("tmp-tasks")
+    directory("tmp-tasks");
     CLOBBER.include("tmp-tasks");
 
     file("tmp-tasks/hello.txt", ["tmp-tasks"], function (t) {
@@ -30,9 +35,20 @@ sake.run(function () {
     
     task("hello-hello", ["tmp-tasks/hello-hello.txt"]);
 });
+process.chdir(cwd);
 
-// Tests
+//---------------------------------------------------------------------------
+// TESTS
+//---------------------------------------------------------------------------
 suite("File Tasks", function () {
+    // Make sure we are in the correct directory
+    setup(function () {
+        process.chdir(__dirname);
+    });
+    // and then move back to the original
+    teardown(function () {
+        process.chdir(cwd);
+    });
     
     test("Create file and parent directory", function () {
         var task = sake.Task.get("tmp-tasks/hello.txt");
