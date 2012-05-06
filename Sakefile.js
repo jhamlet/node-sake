@@ -70,6 +70,21 @@ file("README.md", readMeFiles, function (t) {
 });
 CLEAN.include("README.md");
 //---------------------------------------------------------------------------
+// Tests
+//---------------------------------------------------------------------------
+namespace("test", function () {
+    
+    desc("Run the mocha test suites and display the results.");
+    task("default", function (t) {
+        sh("npm test", function (e, result) {
+            log(result);
+            t.done();
+        });
+    });
+    
+});
+task("test", ["test:default"]);
+//---------------------------------------------------------------------------
 // link up
 //---------------------------------------------------------------------------
 task("build", ["LICENSE", "README.md"]);
