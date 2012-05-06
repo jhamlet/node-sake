@@ -224,10 +224,10 @@ taskSync("longtask", function (t) {
 
 There are `Sync` versions of all the core tasks: `taskSync`, `fileSync`, and `fileCreateSync` as well as `Async` versions also: `taskAsync`, `fileAsync`, and `fileCreateAsync`. `directory` tasks are always initially *synchronous*. You can add *asynchronous* task actions after the initial definition.
 
-Thirdly, you can just specify that all task actions are *synchronous* by setting saké's "synchronous" option to `true`, or by use of the command-line options `-S, --synchronous`.
+Thirdly, you can just specify that all task actions are *synchronous* by setting saké's "synchronous" option to `true`, or by use of the command-line options `-S, --sync`.
 
 ~~~js
-sake.options.synchronous = true;
+sake.options.sync = true;
 
 taskSync("longtask", function (t) {
     cp("some/dir/file.js", "other/dir/file.js");
