@@ -236,7 +236,7 @@ taskSync("longtask", function (t) {
 //... define more synchronous tasks
 
 //... and then revert to async
-sake.options.synchronous = false;
+sake.options.sync = false;
 ~~~
 
 
