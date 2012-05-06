@@ -21,6 +21,8 @@ suite("Sake FileList", function () {
         var fl = new FileList();
         
         fl.include("test/*");
+        // console.log(fl.toJSON(true));
+        
         fl.exclude("test/test-*");
         
         fl.items.should.not.include("test/test-file-list.js");
