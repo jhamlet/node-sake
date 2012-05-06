@@ -11,7 +11,7 @@ Saké has the following features:
 1.  `Sakefiles` (saké’s version of Rakefiles) are completely defined in standard JavaScript (or CoffeeScript, for those who want an even more Rake-like feel).
 2.  Flexible `FileLists` that act like arrays but know about manipulating file names and paths.
 3.  `clean` and `clobber` tasks are available for tidying up.
-4.  _Asynchronous_ task handling, with easy options for secifying _synchronous_ tasks.
+4.  _Asynchronous_ task handling, with easy options for specifying _synchronous_ tasks.
 5.  Many utility methods for handling common build tasks (rm, rm_rf, mkdir, mkdir_p, sh, cat, etc...)
 
 
@@ -56,8 +56,8 @@ Sake will look within the current directory, and all parent directories, for the
 it can find, and then invoke the TASK. If no task is given, it will try to invoke the task named
 "default".
 
-`Sakefile` can be one of "Sakefile", "sakefile", "Sakefile.js", "sakefile.js", "Sakefile.coffee",
-or "sakefile.coffee"
+`Sakefile` can be one of "Sakefile", or "sakefile", with an optional extension of ".js", or
+".coffee"
 ~~~
 
 ### Dependencies ###
