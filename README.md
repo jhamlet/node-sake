@@ -96,7 +96,7 @@ task("taskname", ["prereq1", "prereq2"], function (t) {
 });
 ~~~
     
-Within another node module you can `require("sake")` and access the methods on the exported object:
+Within another node module you can `require("sake")` and access the methods on the exported object, or even run a block of code in the saké context (virtual machine):
 
 ~~~js
 var sake = require("sake");
@@ -104,6 +104,28 @@ var sake = require("sake");
 sake.task("taskname", ["prereq1", "prereq2"], function (t) {
     // task action...
     t.done();
+});
+
+// The function passed to sake#run is compiled and run in the sake context.
+// The function **will not** have access to any variables in this scope,
+// nor, will variables leak from the function's scope into this one.
+sake.run(function () {
+    var jsFiles = new FileList("src/js/**/*.js");
+    
+    require("sake/clean");
+    
+    task("script-min.js", jsFiles, function (t) {
+        var cmd = "infuse " + jsFiles.map(function (path) {
+                return "-i " + path;
+            }) + " -E";
+            
+        sh(cmd, function (err, result) {
+            write(t.name, result, "utf8");
+            t.done();
+        })
+    });
+    
+    CLEAN.include("script-min.js");
 });
 ~~~
 
@@ -243,13 +265,13 @@ sake.options.sync = false;
 File Lists
 ----------
 
-FileLists are lists (an `Array`) of files.
+FileLists are lists of file paths.
 
 ~~~js
 new FileList("*.scss");
 ~~~
 
-Would contain all the files with a ".scss" extension in the top-level directory of your project.
+Would contain all the file paths with a ".scss" extension in the top-level directory of your project.
 
 You can use FileLists pretty much like an `Array`. You can iterate them (with `forEach, filter, reduce`, etc...), `concat` them, `splice` them, and you get back a new FileList object.
 
@@ -283,7 +305,7 @@ FileLists are *lazy*, in that the actual file paths are not determined from the 
 ### FileList Utility Properties & Methods ###
 
 *   `existing` &mdash; will return a new `FileList` with all of the files that actually exist.
-*   `notExisting` &mdash; will return a new `FileList` all of the files that do not exist.
+*   `notExisting` &mdash; will return a new `FileList` of all the files that do not exist.
 *   `extension(ext)` &mdash; returns a new `FileList` with all paths that match the given extension.
 
 ~~~js
@@ -292,9 +314,27 @@ fl.extension(".scss").forEach(function (path) {
 });
 ~~~
 
-*   `grep(pattern)` &mdash; get a `FileList` of all the files that match the given `pattern`. `pattern` can be a plain `String`, a `Glob` pattern, a `RegExp`, or a `function` that receives each path and can return a truthy value include it.
+*   `grep(pattern)` &mdash; get a `FileList` of all the files that match the given `pattern`. `pattern` can be a plain `String`, a `Glob` pattern, a `RegExp`, or a `function` that receives each path and can return a truthy value to include it.
 *   `clearExcludes()` &mdash; clear all exclude patterns/functions.
 *   `clearIncludes()` &mdash; clear all include patterns.
+
+By default, a `FileList` excludes directories. To allow directories call `FileList#clearExcludes()` before requesting any items.
+
+
+The CLEAN and CLOBBER FileLists
+-------------------------------
+
+Within a `Sakefile`:
+
+~~~js
+// defines the CLEAN FileList and 'clean' task
+require("sake/clean");
+
+// defines the above, and also the CLOBBER FileTask and 'clobber' task
+require("sake/clobber");
+~~~
+
+When the "clean" task is run, it will remove any files that have been included in the `CLEAN FileList`. "clobber" will remove any file, or directory, included in the `CLOBBER FileList`.
 
 
 Saké Utility Functions
