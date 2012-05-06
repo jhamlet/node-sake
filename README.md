@@ -4,6 +4,10 @@ Saké
 
 > [S]cripted-r[ake] -- a JavaScript build tool similar to rake, or make.
 
+
+Overview
+--------
+
 This package contains **saké**, a JavaScript build program that runs in node with capabilities similar to ruby's Rake.
 
 Saké has the following features:
@@ -236,7 +240,7 @@ task("long task", function (t) {
 });
 ~~~
 
-Alternatively, you can use the `Sync` version of a task to add an *synchronous* action, and `done` will be called for you.
+Alternatively, you can use the `Sync` version of a task to add a *synchronous* action, and `done` will be called for you after the function completes.
 
 ~~~js
 taskSync("longtask", function (t) {
@@ -244,9 +248,9 @@ taskSync("longtask", function (t) {
 });
 ~~~
 
-There are `Sync` versions of all the core tasks: `taskSync`, `fileSync`, and `fileCreateSync` as well as `Async` versions also: `taskAsync`, `fileAsync`, and `fileCreateAsync`. `directory` tasks are always initially *synchronous*. You can add *asynchronous* task actions after the initial definition.
+There are `Sync` versions of all the core tasks: `taskSync`, `fileSync`, and `fileCreateSync`. Thre are also `Async` versions of each task: `taskAsync`, `fileAsync`, and `fileCreateAsync`. The actions created for a `directory` task are *synchronous*. You can add *asynchronous* task actions after the initial definition.
 
-Thirdly, you can just specify that all task actions are *synchronous* by setting saké's "synchronous" option to `true`, or by use of the command-line options `-S, --sync`.
+Thirdly, you can specify that all of the core task creation functions generate *synchronous* actions by setting saké's "sync" option to `true`, or by use of the command-line option `-S, --sync`.
 
 ~~~js
 sake.options.sync = true;
@@ -260,6 +264,10 @@ taskSync("longtask", function (t) {
 //... and then revert to async
 sake.options.sync = false;
 ~~~
+
+Ultimately, it is up to the saké script author to correctly designate a task action as *synchronous* or *asynchronous*. Nothing prevents the running of an *asynchronous* function within a task's *synchronous* action. If nothing is dependent on the result of that action, then no problem would occur. It's when other tasks rely on the completion of certain *asynchronous* actions, that problems may arise.
+
+In the case of *asynchronous* actions, Saké will issue a `WARNING` when it can not detect a `done()` call within that action.
 
 
 File Lists
@@ -321,8 +329,8 @@ fl.extension(".scss").forEach(function (path) {
 By default, a `FileList` excludes directories. To allow directories call `FileList#clearExcludes()` before requesting any items.
 
 
-The CLEAN and CLOBBER FileLists
--------------------------------
+The "clean" and "clobber" Tasks, and The CLEAN and CLOBBER FileLists
+--------------------------------------------------------------------
 
 Within a `Sakefile`:
 
