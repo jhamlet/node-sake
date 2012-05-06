@@ -1,3 +1,4 @@
 --require should
 --reporter spec
 --ui tdd
+--globals Opt,Arg
