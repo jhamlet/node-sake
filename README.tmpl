@@ -289,15 +289,17 @@ Saké defines a few utility functions to make life a little easier in an asynchr
 
 ### Synchronous Utilities ###
 
-*   `mkdir(dirpath, mode="755")` &mdash; create the `dirpath` directory, if it doesn't already exist.
-*   `mkdir_p(dirpath, mode="755"])` &mdash; as above, but create all intermediate directories as needed.
+*   `mkdir(dirpath, mode="777")` &mdash; create the `dirpath` directory, if it doesn't already exist.
+*   `mkdir_p(dirpath, mode="777"])` &mdash; as above, but create all intermediate directories as needed.
 *   `rm(path, [path1, ..., pathN])` &mdash; remove one or more paths from the file system.
 *   `rm_rf(path, [path1, ..., pathN])` &mdash; as above, and remove directories and their contents.
-*   `cp(from, to)` &mdash; copy a file from `from` path to `to` path
+*   `cp(from, to)` &mdash; copy a file from `from` path to `to` path.
+*   `cp_r(from, to)` &mdash; copy all files from `from` path to `to` path.
 *   `mv(from, to)` &mdash; move a file from `from` path to `to` path.
 *   `ln(from, to)` &mdash; create a hard link from `from` path to `to` path.
 *   `ln_s(from, to)` &mdash; create a symlink from `from` path to `to` path.
 *   `cat(path, [path1, ..., pathN])` &mdash; read all supplied paths and return their contents as a string. If an argument is an `Array` it will be expanded and those paths will be read.
+*   `readdir(path)` &mdash; returns the files of directory `path`.
 *   `read(path, [enc])` &mdash; read the supplied file path. Returns a `buffer`, or a `string` if `enc` is given.
 *   `write(path, data, [enc], mode="w")` &mdash; write the `data` to the supplied file `path`. `data` should be a `buffer` or a `string` if `enc` is given. `mode` is a `string` of either "w", for over write,  or "a" for append.
 *   `slurp(path, [env])` &mdash; alias for `read`
@@ -307,3 +309,16 @@ Saké defines a few utility functions to make life a little easier in an asynchr
 ### Asynchronous Utilities ###
 
 *   `sh(cmd, fn(error, result))` &mdash; execute shell `cmd`. In the callback function, `error` will be a truthy value if there was an error, and `result` will contain the STDERR returned from `cmd`. Otherwise, `result` will contain the STDOUT from the `cmd`.
+
+
+Report an Issue
+---------------
+
+* [Bugs](<%=pkg.bugs.url%>)
+* Contact the author: <jhamlet@hamletink.com>
+
+
+License
+-------
+
+<%=license.split("\n").map(function (line) { return "> " + line; }).join("\n")%>

@@ -42,11 +42,11 @@ options:
    -f, --sakefile PATH    PATH to Sakefile to run instead of searching for one.
    -n, --dry-run          Do a dry run without executing actions.
    -T, --tasks            List tasks with descriptions and exit.
-   -P, --prerequisites    List tasks and their prerequisites and exit.
+   -P, --prereqs          List tasks and their prerequisites and exit.
    -r, --require MODULE   Require MODULE before executing Sakefile and expose the
                           MODULE under a sanitized namespace (i.e.: coffee-script =>
                           [sake.]coffeeScript).
-   -S, --synchronous      Make all standard tasks 'synchronous' by default.
+   -S, --sync             Make all standard tasks 'synchronous' by default.
    -d, --debug            Enable additional debugging output.
    -q, --quiet            Suppress informational messages.
    -V, --version          Print the version of sake and exit.
@@ -57,7 +57,7 @@ it can find, and then invoke the TASK. If no task is given, it will try to invok
 "default".
 
 `Sakefile` can be one of "Sakefile", "sakefile", "Sakefile.js", "sakefile.js", "Sakefile.coffee",
-or "sakefile.js"
+or "sakefile.coffee"
 ~~~
 
 ### Dependencies ###
@@ -304,15 +304,17 @@ Saké defines a few utility functions to make life a little easier in an asynchr
 
 ### Synchronous Utilities ###
 
-*   `mkdir(dirpath, mode="755")` &mdash; create the `dirpath` directory, if it doesn't already exist.
-*   `mkdir_p(dirpath, mode="755"])` &mdash; as above, but create all intermediate directories as needed.
+*   `mkdir(dirpath, mode="777")` &mdash; create the `dirpath` directory, if it doesn't already exist.
+*   `mkdir_p(dirpath, mode="777"])` &mdash; as above, but create all intermediate directories as needed.
 *   `rm(path, [path1, ..., pathN])` &mdash; remove one or more paths from the file system.
 *   `rm_rf(path, [path1, ..., pathN])` &mdash; as above, and remove directories and their contents.
-*   `cp(from, to)` &mdash; copy a file from `from` path to `to` path
+*   `cp(from, to)` &mdash; copy a file from `from` path to `to` path.
+*   `cp_r(from, to)` &mdash; copy all files from `from` path to `to` path.
 *   `mv(from, to)` &mdash; move a file from `from` path to `to` path.
 *   `ln(from, to)` &mdash; create a hard link from `from` path to `to` path.
 *   `ln_s(from, to)` &mdash; create a symlink from `from` path to `to` path.
 *   `cat(path, [path1, ..., pathN])` &mdash; read all supplied paths and return their contents as a string. If an argument is an `Array` it will be expanded and those paths will be read.
+*   `readdir(path)` &mdash; returns the files of directory `path`.
 *   `read(path, [enc])` &mdash; read the supplied file path. Returns a `buffer`, or a `string` if `enc` is given.
 *   `write(path, data, [enc], mode="w")` &mdash; write the `data` to the supplied file `path`. `data` should be a `buffer` or a `string` if `enc` is given. `mode` is a `string` of either "w", for over write,  or "a" for append.
 *   `slurp(path, [env])` &mdash; alias for `read`
@@ -322,3 +324,39 @@ Saké defines a few utility functions to make life a little easier in an asynchr
 ### Asynchronous Utilities ###
 
 *   `sh(cmd, fn(error, result))` &mdash; execute shell `cmd`. In the callback function, `error` will be a truthy value if there was an error, and `result` will contain the STDERR returned from `cmd`. Otherwise, `result` will contain the STDOUT from the `cmd`.
+
+
+Report an Issue
+---------------
+
+* [Bugs](http://github.com/jhamlet/node-sake/issues)
+* Contact the author: <jhamlet@hamletink.com>
+
+
+License
+-------
+
+> Copyright (c) 2012 Jerry Hamlet <jerry@hamletink.com>
+> 
+> Permission is hereby granted, free of charge, to any person
+> obtaining a copy of this software and associated documentation
+> files (the "Software"), to deal in the Software without
+> restriction, including without limitation the rights to use,
+> copy, modify, merge, publish, distribute, sublicense, and/or sell
+> copies of the Software, and to permit persons to whom the
+> Software is furnished to do so, subject to the following
+> conditions:
+> 
+> The above copyright notice and this permission notice shall be
+> included in all copies or substantial portions of the Software.
+> 
+> The Software shall be used for Good, not Evil.
+> 
+> THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+> EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+> OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+> NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+> HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+> WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+> FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+> OTHER DEALINGS IN THE SOFTWARE.
