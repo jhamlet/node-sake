@@ -14,10 +14,11 @@ This package contains **<%= scriptName %>**, a JavaScript build program that run
 
 <%= ScriptName %> has the following features:
 
-1.  `Sakefiles` (<%= scriptName %>’s version of Rakefiles) are completely defined in standard JavaScript (or CoffeeScript, for those who want an even more Rake-like feel).
+1.  `Sakefiles` (**<%= scriptName %>’s** version of Rakefiles) are completely defined in standard JavaScript (or CoffeeScript, for those who want an even more Rake-like feel).
 2.  Flexible `FileLists` that act like arrays but know about manipulating file names and paths.
 3.  `clean` and `clobber` tasks are available for tidying up.
 4.  _Asynchronous_ task handling, with easy options for specifying _synchronous_ tasks.
+5.  Simple _namespacing_ of tasks to break projects into discreet parts.
 5.  Many utility methods for handling common build tasks (rm, rm_rf, mkdir, mkdir_p, sh, cat, etc...)
 
 
@@ -85,7 +86,7 @@ task("taskname", ["prereq1", "prereq2"], function (t) {
 });
 ~~~
     
-Within another node module you can `require("sake")` and access the methods on the exported object, or even run a block of code in the <%=scriptName%> context (virtual machine):
+Within another node module you can `require("sake")` and access the methods on the exported object, or even run a block of code in the **<%=scriptName%>** context (virtual machine):
 
 ~~~js
 var sake = require("sake");
@@ -235,7 +236,7 @@ taskSync("longtask", function (t) {
 
 There are `Sync` versions of all the core tasks: `taskSync`, `fileSync`, and `fileCreateSync`. Thre are also `Async` versions of each task: `taskAsync`, `fileAsync`, and `fileCreateAsync`. The actions created for a `directory` task are *synchronous*. You can add *asynchronous* task actions after the initial definition.
 
-Thirdly, you can specify that all of the core task creation functions generate *synchronous* actions by setting <%= scriptName %>'s "sync" option to `true`, or by use of the command-line option `-S, --sync`.
+Thirdly, you can specify that all of the core task creation functions generate *synchronous* actions by setting **<%= scriptName %>'s** "sync" option to `true`, or by use of the command-line option `-S, --sync`.
 
 ~~~js
 sake.options.sync = true;
@@ -250,9 +251,80 @@ taskSync("longtask", function (t) {
 sake.options.sync = false;
 ~~~
 
-Ultimately, it is up to the <%=scriptName%> script author to correctly designate a task action as *synchronous* or *asynchronous*. Nothing prevents the running of an *asynchronous* function within a task's *synchronous* action. If nothing is dependent on the result of that action, then no problem would occur. It's when other tasks rely on the completion of certain *asynchronous* actions, that problems may arise.
+Ultimately, it is up to the **<%=scriptName%>** script author to correctly designate a task action as *synchronous* or *asynchronous*. Nothing prevents the running of an *asynchronous* function within a task's *synchronous* action. If nothing is dependent on the result of that action, then no problem would occur. It's when other tasks rely on the completion of certain *asynchronous* actions, that problems may arise.
 
-In the case of *asynchronous* actions, <%=ScriptName%> will issue a `WARNING` when it can not detect a `done()` call within that action.
+In the case of *asynchronous* actions, **<%=ScriptName%>** will issue a `WARNING` when it can not detect a `done()` call within that action.
+
+
+Namespaces
+----------
+
+**<%=ScriptName%>** supports simple name spacing of tasks. Simply prepend the namespace before the task name with a colon ":". This can be done when defining a task, or in the list of prerequisites for a task.
+
+~~~js
+// Defines a task 'fuz' in the namespace 'foo' that depends on the task 'buz'
+// in the namespace 'baz'
+task("foo:fuz", ["baz:buz"], function (t) {
+    //...
+    t.done();
+});
+~~~
+
+Then invoke the task as so:
+
+~~~
+% sake foo:fuz
+~~~
+
+You can also use the convenience function `namespace` to wrap your task definitions for a particular namespace. Any _namespace naked_ definitions will first be tried in the local namespace, otherwise they will fall-back to the default namespace:
+
+~~~js
+
+task("default", function (t) {
+    //...
+    t.done():
+});
+
+task("bazil", function (t) {
+    //...
+    t.done():
+});
+
+// define within the 'foo' namespace
+namespace("foo", function () {
+    
+    // defines 'foo:foom' task
+    task("foom", function (t) {
+        //...
+        t.done():
+    });
+    
+});
+
+namespace("baz", function () {
+    
+    // this task is defined in the 'baz' namespace, and depends on the
+    // 'foom' task from the 'foo' namespace
+    task("bazil", ["foo:foom"], function (t) {
+        //...
+        t.done():
+    });
+    // This task is also defined in the 'baz' namespace. It depends on 
+    // the 'bazil' task, which is also defined in 'baz' namespace. It
+    // also depends on the 'default' task in the 'default' (top-level)
+    // namespace.
+    task("buzil", ["bazil", "default"], function (t), {
+        //...
+        t.done():
+    });
+    // If 'bazil' wasn't defined in the 'baz' namespace, it would resolve
+    // to the 'default' namespace task.
+});
+~~~
+
+**Note:** prerequisite names are tied to the defined task's namespace. i.e: If a task "foo:fuz" depends on "foom" **<%=scriptName%>** will look in the "foo" namespace for "foom", and then the "default" namespace.
+
+**Note:** although the `namespace` functions can be nested, **<%=scriptName%>** does not track the hierarchy of `namespace` calls -- if a dependent task is not found in the current task's namespace, it will look for it in the default namespace.
 
 
 File Lists
