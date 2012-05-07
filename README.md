@@ -149,7 +149,7 @@ The various task methods take the following arguments:
         *   a `FileLists`, or 
         *   a `function` that returns one of the above.
     *   or, you can also pass a `FileList` in directly for `prerequisites`.
-3.   `action`: an _optional_ `function` that will be called when the task is invoked.
+3.   `action`: an _optional_ `function` that will be called when the task is invoked. It will be passed the task instance as its first argument, followed by any arguments that it was invoked with (either from the command-line, or through code). Task arguments can also be accessed through the instance's `arguments` property. i.e: `t.arguments`.
 
 All task methods return the task *instance*.
 
@@ -174,7 +174,33 @@ Would result in a task "othertask" with no prerequisites, and no action, and a t
 **Note** how the dependent task was defined *after* it was required as a prerequisite. Task prerequisites are not resolved until the task is invoked. This leads to flexibility in how to compose your tasks and prerequisite tasks.
 
 
-### File Tasks ###
+### Task Instance Properties and Methods ###
+
+*   `name {string}` &mdash; the name of the task.
+*   `namespace {string}` &mdash; the task's namespace.
+*   `type {string}` &mdash; one of "task", "file-task", or "file-create-task"
+*   `fqn {string}` &mdash; the fully qualified name of the task. i.e: "namespace:name".
+*   `prerequisites {array}` &mdash; the list of prerequisite names for the task.
+*   `isNeeded {boolean}` &mdash; whether or not this task needs to run.
+*   `timestamp {boolean}` &mdash; the last modification time for the task.
+*   `invoke([args ...]) {Task}` &mdash; invoke the task passing args to each action for the task. Will run any prerequisites first. Returns the task instance.
+*   `execute([args ...]) {Task}` &mdash; Like `invoke`, but run the task even if it has already been run, or is not needed.
+*   `done()` &mdash; signal that the current task's action is done running.
+
+
+### Task Static Properties and Methods ###
+
+*   `namespace {string}` &mdash; the current namespace.
+*   `invoke(name, [rest ...]) {Task}` &mdash; invoke the named task and pass it the rest of the arguments.
+*   `get(name, [namespace]) {Task}` &mdash; get the _name_d task, optionally start looking in _namespace_. Will throw an error if it can not find a task.
+*   `lookup(name, [namespace]) {Task|null}` &mdash; lookup a task with _name_, optionally start looking in _namespace_.
+*   `getAll() {array[Task]}` &mdash; return all defined tasks.
+*   `has(name, [namespace]) {boolean}` &mdash; does the task _name_ exist?
+*   `find(args, sortFn) {array[Task]}` &mdash; search for a task. _args_ can be an object with keys specifying which properties to match on, and their values denoting the value to match. _args_ can also be a function that accepts a task and returns a boolean whether or not that task matches.
+
+
+File Tasks
+----------
 
 File tasks are created with the (appropriately named) `file` method. File tasks, however, are only triggered if the file doesn't exist, or the modification time of any of its prerequisites is newer than itself.
 
@@ -199,7 +225,8 @@ file("combined/file/path", ["pathA", "pathB", "pathC"], function (t) {
 would be triggered if `path/to/some/file` did not exist, or its modification time was earlier than any of its prerequisites (`pathA`, `pathB`, or  `pathC`).
 
 
-### Directory Tasks ###
+Directory Tasks
+---------------
 
 Directory tasks, created with the `directory` method, are tasks that will only be called if they do not exist. A task will be created for the named directory (and for all directories along the way) with the action of creating the directory.
 
@@ -215,7 +242,8 @@ task("dir/path/to/create", ["othertask"], action (t) {
 ~~~
 
 
-### File Create Tasks ###
+File Create Tasks
+-----------------
 
 A file create task is a file task, that when used as a prerequisite, will be needed if, and only if, the file has not been created. Once created, it is not re-triggered if any of its prerequisites are newer, nor does it trigger any rebuilds of tasks that depend on it whenever the file is updated.
 
@@ -433,11 +461,11 @@ Saké defines a few utility functions to make life a little easier in an asynchr
 *   `mv(from, to)` &mdash; move a file from `from` path to `to` path.
 *   `ln(from, to)` &mdash; create a hard link from `from` path to `to` path.
 *   `ln_s(from, to)` &mdash; create a symlink from `from` path to `to` path.
-*   `cat(path, [path1, ..., pathN])` &mdash; read all supplied paths and return their contents as a string. If an argument is an `Array` it will be expanded and those paths will be read.
-*   `readdir(path)` &mdash; returns the files of directory `path`.
-*   `read(path, [enc])` &mdash; read the supplied file path. Returns a `buffer`, or a `string` if `enc` is given.
+*   `cat(path, [path1, ..., pathN]) {string}` &mdash; read all supplied paths and return their contents as a string. If an argument is an `Array` it will be expanded and those paths will be read.
+*   `readdir(path) {array[string]}` &mdash; returns the files of directory `path`.
+*   `read(path, [enc]) {string|Buffer}` &mdash; read the supplied file path. Returns a `buffer`, or a `string` if `enc` is given.
 *   `write(path, data, [enc], mode="w")` &mdash; write the `data` to the supplied file `path`. `data` should be a `buffer` or a `string` if `enc` is given. `mode` is a `string` of either "w", for over write,  or "a" for append.
-*   `slurp(path, [env])` &mdash; alias for `read`
+*   `slurp(path, [env]) {sring|Buffer}` &mdash; alias for `read`
 *   `spit(path, data, [enc], mode="w")` &mdash; alias for `write`
 
 
@@ -480,3 +508,4 @@ License
 > WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 > FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 > OTHER DEALINGS IN THE SOFTWARE.
+
