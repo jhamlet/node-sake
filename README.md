@@ -186,6 +186,7 @@ Would result in a task "othertask" with no prerequisites, and no action, and a t
 *   `invoke([args ...]) {Task}` &mdash; invoke the task passing args to each action for the task. Will run any prerequisites first. Returns the task instance.
 *   `execute([args ...]) {Task}` &mdash; Like `invoke`, but run the task even if it has already been run, or is not needed.
 *   `done()` &mdash; signal that the current task's action is done running.
+*   `abort([msg], [exitCode])` &mdash; abort the currently running task's actions, if _exitCode_ is specified **saké** will exit with that exit code and no other tasks will be processed. Otherwise, task processing will continue as normal.
 
 
 ### Task Static Properties and Methods ###
@@ -368,6 +369,14 @@ namespace("baz", function () {
 **Note:** prerequisite names are tied to the defined task's namespace. i.e: If a task "foo:fuz" depends on "foom" **saké** will look in the "foo" namespace for "foom", and then the "default" namespace.
 
 **Note:** although the `namespace` functions can be nested, **saké** does not track the hierarchy of `namespace` calls -- if a dependent task is not found in the current task's namespace, it will look for it in the default namespace.
+
+
+Including Other Saké Files
+-------------------------------------
+
+You can include other **saké** files with the `include` and `load` methods. The included files will be run in the **saké** context, so any variables they do not declare with the `var` keyword will be set on the global **saké** context. This allows you to break your project build files up into discreet files.
+
+All `require` and `include`, or `load` statements, are resolved relative to the current file, so you can create your own hierarchy of build dependencies.
 
 
 File Lists
