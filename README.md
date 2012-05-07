@@ -192,7 +192,7 @@ Would result in a task "othertask" with no prerequisites, and no action, and a t
 
 *   `namespace {string}` &mdash; the current namespace.
 *   `invoke(name, [rest ...]) {Task}` &mdash; invoke the named task and pass it the rest of the arguments.
-*   `get(name, [namespace]) {Task}` &mdash; get the _name_d task, optionally start looking in _namespace_. Will throw an error if it can not find a task.
+*   `get(name, [namespace]) {Task}` &mdash; get the task _name_, optionally start looking in _namespace_. Will throw an error if it can not find a task.
 *   `lookup(name, [namespace]) {Task|null}` &mdash; lookup a task with _name_, optionally start looking in _namespace_.
 *   `getAll() {array[Task]}` &mdash; return all defined tasks.
 *   `has(name, [namespace]) {boolean}` &mdash; does the task _name_ exist?
