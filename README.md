@@ -45,14 +45,16 @@ usage: sake [TASK] [ARGUMENTS ...] [ENV=VALUE ...] [options]
 
 options:
    -f, --sakefile SAKEFILE   PATH to Sakefile to run instead of searching for one.
-   -n, --dry-run             Do a dry run without executing actions.
-   -T, --tasks               List tasks with descriptions and exit.
-   -P, --prereqs             List tasks and their prerequisites and exit.
+   -T, --tasks [PATTERN]     List tasks with descriptions (optionally, just those
+                             matching PATTERN) and exit.
+   -P, --prereqs [PATTERN]   List tasks and their prerequisites (optionally, just those
+                             matching PATTERN) and exit.
    -r, --require MODULE      Require MODULE before executing Sakefile and expose the
                              MODULE under a sanitized namespace (i.e.: coffee-script =>
                              [sake.]coffeeScript). Can be specified multiple times.
    -l, --sakelib SAKELIB     Auto-include any .sake[.js|.coffeee] files in SAKELIB.
                              (default is 'sakelib'.) Can be specified multiple times
+   -n, --dry-run             Do a dry run without executing actions.
    -S, --sync                Make all standard tasks 'synchronous' by default.
    -d, --debug               Enable additional debugging output.
    -q, --quiet               Suppress informational messages.
