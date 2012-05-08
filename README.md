@@ -44,30 +44,41 @@ usage: sake [TASK] [ARGUMENTS ...] [ENV=VALUE ...] [options]
 [ENV=VALUE ...]     Zero or more arguments to translate into environment variables.
 
 options:
-   -f, --sakefile SAKEFILE   PATH to Sakefile to run instead of searching for one.
+   -f, --sakefile PATH       PATH to Sakefile to run instead of searching for one.
    -T, --tasks [PATTERN]     List tasks with descriptions (optionally, just those
                              matching PATTERN) and exit.
-   -P, --prereqs [PATTERN]   List tasks and their prerequisites (optionally, just those
-                             matching PATTERN) and exit.
+   -P, --prereqs [PATTERN]   List tasks and their prerequisites (optionally, just
+                             those matching PATTERN) and exit.
    -r, --require MODULE      Require MODULE before executing Sakefile and expose the
-                             MODULE under a sanitized namespace (i.e.: coffee-script =>
-                             [sake.]coffeeScript). Can be specified multiple times.
-   -l, --sakelib SAKELIB     Auto-include any .sake[.js|.coffeee] files in SAKELIB.
+                             MODULE under a sanitized namespace (i.e.: coffee-script
+                             => [sake.]coffeeScript). Can be specified multiple
+                             times.
+   -l, --sakelib PATH        Auto-include any .sake[.js|.coffeee] files in PATH.
                              (default is 'sakelib'.) Can be specified multiple times
    -n, --dry-run             Do a dry run without executing actions.
+   -C, --no-chdir            Do not change directory to the Sakefile location.
+   -N, --no-search           Do not search parent directories for a Sakefile.
+   -G, --no-system           Do not use SAKE_PATH environment variable to search for
+                             a Sakefile.
    -S, --sync                Make all standard tasks 'synchronous' by default.
    -d, --debug               Enable additional debugging output.
    -q, --quiet               Suppress informational messages.
    -V, --version             Print the version of sake and exit.
    -h, --help                Print this help information and exit.
 
-Sake will look within the current directory, and all parent directories, for the first SAKEFILE it
-can find, and then invoke the TASK. If no task is given, it will try to invoke the task named
-"default".
+Sake searches the current directory, and all parent directories, for a Sakefile, unless
+--no-search is specified. Otherwise, if defined and --no-system is not set, it searches
+paths in the SAKE_PATH environment variable.
 
-SAKEFILE can be one of "Sakefile", or "sakefile", with an optional extension of ".js", or
-".coffee". (If you wan't to run a coffe-script file though, you will have to use the ".coffee"
-extension.)
+If found through normal searching, and not in SAKE_PATH, sake changes the process
+current working directory to the directory of the found Sakefile, otherwise it stays
+where it was run from.
+
+Sake then invokes the specified TASK, or the "default" one.
+
+Sakefile can be one of "Sakefile", or "sakefile", with an optional extension of ".js",
+or ".coffee". (If you wan't to run a coffe-script file though, you will have to use the
+".coffee" extension.)
 ~~~
 
 ### Dependencies ###
@@ -405,7 +416,7 @@ task("foo", function (t, amt, word, flag) {
 });
 ~~~
 
-**Note:** This differs from how **rake**, and **jake** do things. In **saké** you can only invoke one task on the command-line.
+**Note:** This differs from how **rake**, and **jake** do things. In **saké** you can only invoke one task on the command-line. All other arguments on the command-line are considered task arguments.
 
 
 Including Other Saké Files
