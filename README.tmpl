@@ -442,7 +442,7 @@ To get to the actual items of the FileList, use the `#items` property, or the `#
 FileLists are *lazy*, in that the actual file paths are not determined from the include and exclude patterns until the individual items are requested. This allows you to define a FileList and incrementally add patterns to it in the Sakefile file. The FileList paths will not be resolved until the task that uses it as a prerequisite actually asks for the final paths.
 
 
-### FileList Utility Properties & Methods ###
+### FileList Properties & Methods ###
 
 *   `existing` &mdash; will return a new `FileList` with all of the files that actually exist.
 *   `notExisting` &mdash; will return a new `FileList` of all the files that do not exist.

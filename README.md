@@ -37,9 +37,9 @@ Command-Line Usage
 ~~~
 % sake -h
 
-usage: sake [TASK] [ARGUMENTS ...] [ENV=VALUE ...] [options]
+usage: sake [TASKNAME] [ARGUMENTS ...] [ENV=VALUE ...] [options]
 
-[TASK]       Name of the task to run. Defaults to 'default'.
+[TASKNAME]     Name of the task to run. Defaults to 'default'.
 [ARGUMENTS ...]     Zero or more arguments to pass to the task invoked.
 [ENV=VALUE ...]     Zero or more arguments to translate into environment variables.
 
@@ -66,19 +66,19 @@ options:
    -V, --version             Print the version of sake and exit.
    -h, --help                Print this help information and exit.
 
-Sake searches the current directory, and all parent directories, for a Sakefile, unless
---no-search is specified. Otherwise, if defined and --no-system is not set, it searches
-paths in the SAKE_PATH environment variable.
+If a Sakefile is not specified, sake searches the current directory, and all parent
+directories, for one (unless -N, --no-search is set). Otherwise, if the SAKE_PATH
+environment variable is defined it searches those path(s) (unless -G, --no-system is
+set).
 
-If found through normal searching, and not in SAKE_PATH, sake changes the process
-current working directory to the directory of the found Sakefile, otherwise it stays
-where it was run from.
+If specified, or found through normal searching (not in SAKE_PATH(s)), sake changes the
+process' current working directory to the directory of the found Sakefile (unless -C,
+--no-chdir is set), otherwise it stays where it was run from.
 
-Sake then invokes the specified TASK, or the "default" one.
+Sake then invokes the specified TASKNAME, or the "default" one.
 
 Sakefile can be one of "Sakefile", or "sakefile", with an optional extension of ".js",
-or ".coffee". (If you wan't to run a coffe-script file though, you will have to use the
-".coffee" extension.)
+or ".coffee".
 ~~~
 
 ### Dependencies ###
@@ -473,7 +473,7 @@ To get to the actual items of the FileList, use the `#items` property, or the `#
 FileLists are *lazy*, in that the actual file paths are not determined from the include and exclude patterns until the individual items are requested. This allows you to define a FileList and incrementally add patterns to it in the Sakefile file. The FileList paths will not be resolved until the task that uses it as a prerequisite actually asks for the final paths.
 
 
-### FileList Utility Properties & Methods ###
+### FileList Properties & Methods ###
 
 *   `existing` &mdash; will return a new `FileList` with all of the files that actually exist.
 *   `notExisting` &mdash; will return a new `FileList` of all the files that do not exist.
