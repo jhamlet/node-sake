@@ -364,6 +364,12 @@ You can include other **<%=scriptName%>** files with the `include` and `load` me
 All `require` and `include`, or `load` statements, are resolved relative to the current file, so you can create your own hierarchy of build dependencies.
 
 
+Sake Library
+------------
+
+**<%=ScriptName%>** will load any `.sake`, `.sake.js`, or `.sake.coffee` files located in a `sakelib` directory relative to the `Sakefile` being run. This directory name can be modified with the `-l, --sakelib` option, and multiple directories can be specified. This allows you to re-use common tasks across multiple projects.
+
+
 File Lists
 ----------
 

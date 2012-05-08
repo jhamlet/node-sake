@@ -44,25 +44,28 @@ usage: sake [TASK] [ARGUMENTS ...] [ENV=VALUE ...] [options]
 [ENV=VALUE ...]     Zero or more arguments to translate into environment variables.
 
 options:
-   -f, --sakefile PATH    PATH to Sakefile to run instead of searching for one.
-   -n, --dry-run          Do a dry run without executing actions.
-   -T, --tasks            List tasks with descriptions and exit.
-   -P, --prereqs          List tasks and their prerequisites and exit.
-   -r, --require MODULE   Require MODULE before executing Sakefile and expose the
-                          MODULE under a sanitized namespace (i.e.: coffee-script =>
-                          [sake.]coffeeScript).
-   -S, --sync             Make all standard tasks 'synchronous' by default.
-   -d, --debug            Enable additional debugging output.
-   -q, --quiet            Suppress informational messages.
-   -V, --version          Print the version of sake and exit.
-   -h, --help             Print this help information and exit.
+   -f, --sakefile SAKEFILE   PATH to Sakefile to run instead of searching for one.
+   -n, --dry-run             Do a dry run without executing actions.
+   -T, --tasks               List tasks with descriptions and exit.
+   -P, --prereqs             List tasks and their prerequisites and exit.
+   -r, --require MODULE      Require MODULE before executing Sakefile and expose the
+                             MODULE under a sanitized namespace (i.e.: coffee-script =>
+                             [sake.]coffeeScript). Can be specified multiple times.
+   -l, --sakelib SAKELIB     Auto-include any .sake[.js|.coffeee] files in SAKELIB.
+                             (default is 'sakelib'.) Can be specified multiple times
+   -S, --sync                Make all standard tasks 'synchronous' by default.
+   -d, --debug               Enable additional debugging output.
+   -q, --quiet               Suppress informational messages.
+   -V, --version             Print the version of sake and exit.
+   -h, --help                Print this help information and exit.
 
-Sake will look within the current directory, and all parent directories, for the first `Sakefile`
-it can find, and then invoke the TASK. If no task is given, it will try to invoke the task named
+Sake will look within the current directory, and all parent directories, for the first SAKEFILE it
+can find, and then invoke the TASK. If no task is given, it will try to invoke the task named
 "default".
 
-`Sakefile` can be one of "Sakefile", or "sakefile", with an optional extension of ".js", or
-".coffee"
+SAKEFILE can be one of "Sakefile", or "sakefile", with an optional extension of ".js", or
+".coffee". (If you wan't to run a coffe-script file though, you will have to use the ".coffee"
+extension.)
 ~~~
 
 ### Dependencies ###
@@ -377,6 +380,12 @@ Including Other Saké Files
 You can include other **saké** files with the `include` and `load` methods. The included files will be run in the **saké** context, so any variables they do not declare with the `var` keyword will be set on the global **saké** context. This allows you to break your project build files up into discreet files.
 
 All `require` and `include`, or `load` statements, are resolved relative to the current file, so you can create your own hierarchy of build dependencies.
+
+
+Sake Library
+------------
+
+**Saké** will load any `.sake`, `.sake.js`, or `.sake.coffee` files located in a `sakelib` directory relative to the `Sakefile` being run. This directory name can be modified with the `-l, --sakelib` option, and multiple directories can be specified. This allows you to re-use common tasks across multiple projects.
 
 
 File Lists

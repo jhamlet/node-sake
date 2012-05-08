@@ -1,0 +1,7 @@
+
+namespace("d", function () {
+    
+    taskSync("one", function (t) {
+        log(t.fqn);
+    });
+});
