@@ -376,6 +376,38 @@ namespace("baz", function () {
 **Note:** although the `namespace` functions can be nested, **saké** does not track the hierarchy of `namespace` calls -- if a dependent task is not found in the current task's namespace, it will look for it in the default namespace.
 
 
+Passing Arguments to A Task
+---------------------------
+
+There are two ways to pass arguments to a task.
+
+First, **saké** translates any arguments in the form of `ENV=VALUE` on the command-line into `process.env` values:
+
+~~~
+% sake build BUILD_TYPE=debug ENVIRONMENT=prod
+~~~
+
+Will set `process.env.BUILD_TYPE` to "debug" and `process.env.ENVIRONMENT` to "prod". The values are JSON parsed; so the values are translated into real JavaScript values (numbers, true, false, etc...).
+
+Secondly, **saké** passes all non-option, and non-ENV=VALUE, looking arguments from the command-line to the invoked task:
+
+~~~
+% sake foo 3.14 pie true
+~~~
+
+Will invoke the "foo" task and pass to each of foo's actions (after the task instance itself) `3.14`, "pie" and `true`. The arguments are also JSON parsed to get real JavaScript values.
+
+~~~js
+task("foo", function (t, amt, word, flag) {
+    log(amt);   // => 3.14
+    log(word);  // => "pie"
+    log(flag);  // => true
+});
+~~~
+
+**Note:** This differs from how **rake**, and **jake** do things. In **saké** you can only invoke one task on the command-line.
+
+
 Including Other Saké Files
 -------------------------------------
 
