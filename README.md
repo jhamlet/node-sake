@@ -87,7 +87,7 @@ These are installed when **sake** is installed.
 
 ~~~
 nomnom:   >=1.5.x
-async:    >=0.1.18
+async:    >=0.1.x
 resolve:  >=0.2.x
 proteus:  >=0.0.x
 wordwrap: >=0.0.2
