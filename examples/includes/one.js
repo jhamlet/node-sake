@@ -1,4 +1,6 @@
 
+log(">> " + __dirname + " >> " + __filename);
+
 function logNameActionFoo (t) {
     log(t.name + ": foo");
 }

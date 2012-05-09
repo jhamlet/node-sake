@@ -4,7 +4,12 @@ var simpleMod = require("simple/standard");
 require("sake/clean");
 CLEAN.include("**/*.js");
 
+log(">> " + __dirname + " >> " + __filename);
+
+includePaths.push(__dirname + "/other-module");
+
 require("simple/sake-context");
+require("sample");
 
 function logNameAction (t) {
     log(t.name);
