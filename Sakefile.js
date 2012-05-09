@@ -1,5 +1,6 @@
 /*globals desc, task, taskSync, file, directory, fileSync, FileList, CLOBBER, CLEAN, spit, slurp, log, sh */
 var Path        = require("path"),
+    FS          = require("fs"),
     authorInfo  = read("AUTHORS", "utf8").split("\n")[0],
     buildStart  = new Date(),
     readMeFiles = new FileList(),
@@ -29,17 +30,21 @@ taskSync("build", ["pre-build"], function (t) {
 //---------------------------------------------------------------------------
 // LICENSE
 //---------------------------------------------------------------------------
-desc("Keep the LICENSE file up-to-date.");
-fileSync("LICENSE", ["AUTHORS"], function (t) {
-    var year = new Date().getFullYear(),
-        license = read(t.name, "utf8").split("\n")
-    ;
-    
-    license[0] = "Copyright (c) " + year + " " + authorInfo;
-    
-    write(t.name, license.join("\n"), "utf8");
-    log.info(t.name + " updated");
-});
+if (((new Date()).getFullYear() < FS.statSync("LICENSE").mtime.getFullYear()) ||
+    (FS.statSync("AUTHORS").mtime.getTime() > FS.statSync("LICENSE").mtime.getTime())
+) {
+    desc("Keep the LICENSE file up-to-date.");
+    fileSync("LICENSE", function (t) {
+        var year = new Date().getFullYear(),
+            license = read(t.name, "utf8").split("\n")
+        ;
+
+        license[0] = "Copyright (c) " + year + " " + authorInfo;
+
+        write(t.name, license.join("\n"), "utf8");
+        log.info(t.name + " updated");
+    });
+}
 //---------------------------------------------------------------------------
 // README file
 //---------------------------------------------------------------------------
@@ -76,12 +81,44 @@ namespace("test", function () {
     
     desc("Run the mocha test suites and display the results.");
     task("default", function (t) {
-        sh("npm test", function (e, result) {
+        sh("npm test", function (err, result) {
             log(result);
             t.done();
         });
     });
     
+    task("sh-chain", function (t) {
+        sh(
+            [
+                "ls -a",
+                "curl 'http://hamletink.com/'",
+                "cat README.md"
+            ],
+            function (err, result) {
+                // log(result.join("\n"));
+                t.done();
+            }
+        );
+    });
+
+    task("sh-chain-fail", function (t) {
+        sh(
+            [
+                "ls -a",
+                "cat lib/**/*.js", // should fail here
+                "curl 'http://hamletink.com/'",
+                "cat README.md"
+            ],
+            function (err, result) {
+                if (err) {
+                    log.error(result.replace(/\n$/, ""));
+                }
+                t.done();
+            }
+        );
+    });
+    
+    task("sh", ["sh-chain", "sh-chain-fail"]);
 });
 task("test", ["test:default"]);
 //---------------------------------------------------------------------------
