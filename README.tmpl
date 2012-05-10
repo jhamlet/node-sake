@@ -188,7 +188,7 @@ Would result in a task "othertask" with no prerequisites, and no action, and a t
 File Tasks
 ----------
 
-File tasks are created with the (appropriately named) `file` method. File tasks, are only triggered if the file doesn't exist, or the modification time of any of its prerequisites is newer than itself.
+File tasks are created with the (appropriately named) `file` method. File tasks are only triggered if the file doesn't exist, or the modification time of any of its prerequisites is newer than itself.
 
 ~~~js
 file("path/to/some/file", function (t) {
