@@ -219,7 +219,7 @@ Would result in a task "othertask" with no prerequisites, and no action, and a t
 File Tasks
 ----------
 
-File tasks are created with the (appropriately named) `file` method. File tasks, however, are only triggered if the file doesn't exist, or the modification time of any of its prerequisites is newer than itself.
+File tasks are created with the (appropriately named) `file` method. File tasks, are only triggered if the file doesn't exist, or the modification time of any of its prerequisites is newer than itself.
 
 ~~~js
 file("path/to/some/file", function (t) {
@@ -430,9 +430,9 @@ You can also add your own paths to the list of ones that **saké** uses to resol
 
 ~~~js
 // in a Sakefile
-includePaths.push("some/file/path");
+includePaths.push("some/path");
 
-require("some-module"); // will be tried in some/file/path/some-module.js
+require("some-module"); // will be tried in some/path/some-module.js
 ~~~
 
 Also, the `__dirname` and `__filename` properties are available in `included` files to help resolve local includes.
