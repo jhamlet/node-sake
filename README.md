@@ -426,6 +426,22 @@ You can include other **saké** files with the `include` and `load` methods. The
 
 All `require` and `include`, or `load` statements, are resolved relative to the current file, so you can create your own hierarchy of build dependencies.
 
+You can also add your own paths to the list of ones that **saké** uses to resolve `requires`: `[sake.]includePaths` is an array of directory paths to search. They are tried in reverse order, so if you push a path on to the array that path will be tried first, followed by any others.
+
+~~~js
+// in a Sakefile
+includePaths.push("some/file/path");
+
+require("some-module"); // will be tried in some/file/path/some-module.js
+~~~
+
+Also, the `__dirname` and `__filename` properties are available in `included` files to help resolve local includes.
+
+~~~js
+var Path = require("path");
+
+include(Path.join(__dirname, "include-dir/include-file"));
+~~~
 
 Sake Library
 ------------
