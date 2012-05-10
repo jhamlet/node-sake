@@ -503,7 +503,7 @@ Saké defines a few utility functions to make life a little easier in an asynchr
 
 ### Asynchronous Utilities ###
 
-*   `sh(cmd, fn(error, result))` &mdash; execute shell `cmd`. In the callback function, `error` will be a truthy value if there was an error, and `result` will contain the STDERR returned from `cmd`. Otherwise, `result` will contain the STDOUT from the `cmd`.
+*   `sh(cmd, fn(error, result))` &mdash; execute shell `cmd`. In the callback function, `error` will be a truthy value if there was an error, and `result` will contain the STDERR returned from `cmd`. Otherwise, `result` will contain the STDOUT from the `cmd`. If `cmd` is an array of shell commands, each one will be run before the next, and only when they all complete, or an error is encountered, will the callback `fn` be called, and `result` be an array of the individual commands.
 
 
 Report an Issue
