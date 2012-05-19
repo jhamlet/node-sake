@@ -294,7 +294,7 @@ taskSync("longtask", function (t) {
 });
 ~~~
 
-There are `Sync` versions of all the core tasks: `taskSync`, `fileSync`, and `fileCreateSync`. Thre are also `Async` versions of each task: `taskAsync`, `fileAsync`, and `fileCreateAsync`. The actions created for a `directory` task are *synchronous*. You can add *asynchronous* task actions after the initial definition.
+There are `Sync` versions of all the core tasks: `taskSync`, `fileSync`, and `fileCreateSync`. There are also `Async` versions of each task: `taskAsync`, `fileAsync`, and `fileCreateAsync`. The actions created for a `directory` task are *synchronous*. You can add *asynchronous* task actions after the initial definition.
 
 Thirdly, you can specify that all of the core task creation functions generate *synchronous* actions by setting **saké's** "sync" option to `true`, or by use of the command-line option `-S, --sync`.
 
@@ -550,7 +550,7 @@ Saké defines a few utility functions to make life a little easier in an asynchr
 
 ### Asynchronous Utilities ###
 
-*   `sh(cmd, fn(error, result))` &mdash; execute shell `cmd`. In the callback function, `error` will be a truthy value if there was an error, and `result` will contain the STDERR returned from `cmd`. Otherwise, `result` will contain the STDOUT from the `cmd`. If `cmd` is an array of shell commands, each one will be run before the next, and only when they all complete, or an error is encountered, will the callback `fn` be called, and `result` be an array of the individual commands.
+*   `sh(cmd, fn(error, result))` &mdash; execute shell `cmd`. In the callback function, `error` will be a truthy value if there was an error, and `result` will contain the STDERR returned from `cmd`. Otherwise, `result` will contain the STDOUT from the `cmd`. If `cmd` is an array of shell commands, each one will be run before the next, and only when they all complete, or an error is encountered, will the callback `fn` be called, and `result` be an array of the results of the individual commands.
 
 
 Report an Issue
