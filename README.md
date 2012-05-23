@@ -91,6 +91,7 @@ async:    >=0.1.x
 resolve:  >=0.2.x
 proteus:  >=0.0.x
 wordwrap: >=0.0.2
+glob:     >=2.1.x
 ~~~
 
 
