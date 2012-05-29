@@ -1,7 +1,7 @@
 {   
     "name": "sake",
     "description": "[S]cripted-r[ake] -- a JavaScript build tool similar to rake, or make.",
-    "version": "0.1.16",
+    "version": "0.1.17",
     "keywords": [
         "build",
         "make",
@@ -13,7 +13,7 @@
         "sake": "./bin/sake"
     },
     "directories": {
-        "lib": "lib"
+        "lib": "./lib"
     },
     "dependencies": {
         "nomnom":   ">=1.5.x",
