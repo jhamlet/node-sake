@@ -2,9 +2,9 @@
 
 var should   = require("should"),
     FS       = require("fs"),
-    FileList = require("../lib/node_modules/sake/file-list"),
-    Task     = require("../lib/node_modules/sake/task"),
-    FileTask = require("../lib/node_modules/sake/file-task")
+    FileList = require("sake/file-list"),
+    Task     = require("sake/task"),
+    FileTask = require("sake/file-task")
 ;
 
 suite("Sake FileList", function () {

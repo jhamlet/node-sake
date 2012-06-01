@@ -1,19 +1,16 @@
 {   
     "name": "sake",
     "description": "[S]cripted-r[ake] -- a JavaScript build tool similar to rake, or make.",
-    "version": "0.1.17",
+    "version": "0.1.18",
     "keywords": [
         "build",
         "make",
         "rake",
         "jake"
     ],
-    "main": "./lib/node_modules/sake/index.js",
+    "main": "./node_modules/sake/index.js",
     "bin": {
         "sake": "./bin/sake"
-    },
-    "directories": {
-        "lib": "./lib"
     },
     "dependencies": {
         "nomnom":   ">=1.5.x",
@@ -28,6 +25,9 @@
         "should":     ">=0.5.x",
         "underscore": ">=1.3.x"
     },
+    "bundleDependencies": [
+        "sake"
+    ],
     "scripts": {
         "test": "mocha test/test-*"
     },

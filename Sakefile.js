@@ -49,7 +49,7 @@ if (((new Date()).getFullYear() < FS.statSync("LICENSE").mtime.getFullYear()) ||
 // README file
 //---------------------------------------------------------------------------
 readMeFiles.include(
-    "README.tmpl", "package.json", "lib/node_modules/sake/options.js",
+    "README.tmpl", "package.json", "node_modules/sake/options.js",
     "LICENSE", "AUTHORS", "Sakefile.*"
 );
 

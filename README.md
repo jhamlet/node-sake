@@ -554,6 +554,11 @@ Saké defines a few utility functions to make life a little easier in an asynchr
 *   `sh(cmd, fn(error, result))` &mdash; execute shell `cmd`. In the callback function, `error` will be a truthy value if there was an error, and `result` will contain the STDERR returned from `cmd`. Otherwise, `result` will contain the STDOUT from the `cmd`. If `cmd` is an array of shell commands, each one will be run before the next, and only when they all complete, or an error is encountered, will the callback `fn` be called, and `result` be an array of the results of the individual commands.
 
 
+Developer Notes
+---------------
+
+*   Due to an issue with npm v1.1.13 and up (see issue [#2490](https://github.com/isaacs/npm/issues/2490)), I had to move my code into the `node_modules/sake` directory and add a `bundleDependencies` array to the `package.json` file.
+
 Report an Issue
 ---------------
 

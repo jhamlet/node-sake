@@ -3,8 +3,8 @@
 var should  = require("should"),
     Path    = require("path"),
     FS      = require("fs"),
-    sake    = require("../"),
-    futil   = require("../lib/node_modules/sake/file-utils"),
+    sake    = require("sake"),
+    futil   = require("sake/file-utils"),
     cwd     = process.cwd()
 ;
 //---------------------------------------------------------------------------
