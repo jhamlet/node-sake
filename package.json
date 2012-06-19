@@ -1,14 +1,14 @@
 {   
     "name": "sake",
     "description": "[S]cripted-r[ake] -- a JavaScript build tool similar to rake, or make.",
-    "version": "0.1.20",
+    "version": "0.1.21",
     "keywords": [
         "build",
         "make",
         "rake",
         "jake"
     ],
-    "main": "./node_modules/sake/index.js",
+    "main": "./node_modules/sake/sake.js",
     "bin": {
         "sake": "./bin/sake"
     },
