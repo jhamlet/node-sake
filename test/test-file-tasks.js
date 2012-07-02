@@ -5,7 +5,7 @@ var should  = require("should"),
     FS      = require("fs"),
     sake    = require("sake"),
     futil   = require("sake/file-utils"),
-    existsSync = FS.existsSync,
+    existsSync = FS.existsSync || Path.existsSync,
     cwd     = process.cwd()
 ;
 //---------------------------------------------------------------------------
