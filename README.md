@@ -37,13 +37,13 @@ Command-Line Usage
 ~~~
 % sake -h
 
-usage: sake [TASKNAME] [ARGUMENTS ...] [ENV=VALUE ...] [options]
+Usage: sake [TASKNAME] [ARGUMENTS ...] [ENV=VALUE ...] [options]
 
 [TASKNAME]     Name of the task to run. Defaults to 'default'.
 [ARGUMENTS ...]     Zero or more arguments to pass to the task invoked.
 [ENV=VALUE ...]     Zero or more arguments to translate into environment variables.
 
-options:
+Options:
    -f, --sakefile PATH       PATH to Sakefile to run instead of searching for one.
    -T, --tasks [PATTERN]     List tasks with descriptions (optionally, just those
                              matching PATTERN) and exit.
@@ -79,6 +79,7 @@ Sake then invokes the specified TASKNAME, or the "default" one.
 
 Sakefile can be one of "Sakefile", or "sakefile", with an optional extension of ".js",
 or ".coffee".
+
 ~~~
 
 ### Dependencies ###
@@ -86,12 +87,13 @@ or ".coffee".
 These are installed when **sake** is installed.
 
 ~~~
-nomnom:   >=1.5.x
-async:    >=0.1.x
-resolve:  >=0.2.x
-proteus:  >=0.0.x
-wordwrap: >=0.0.2
-glob:     >=2.1.x
+nomnom:    >=1.5.x
+async:     >=0.1.x
+resolve:   >=0.2.x
+proteus:   >=0.0.x
+wordwrap:  >=0.0.2
+glob:      >=3.1.x
+minimatch: >=0.2.x
 ~~~
 
 
@@ -423,7 +425,7 @@ task("foo", function (t, amt, word, flag) {
 Including Other Saké Files
 -------------------------------------
 
-You can include other **saké** files with the `include` and `load` methods. The included files will be run in the **saké** context, so any variables they do not declare with the `var` keyword will be set on the global **saké** context. This allows you to break your project build files up into discreet files.
+You can include other **saké** files with the `include` and `load` methods. The included files will be run in the **saké** context, so any variables declared will be set on the global **saké** context. This allows you to break your project build files up into discreet files. Just be aware of naming collisions.
 
 All `require` and `include`, or `load` statements, are resolved relative to the current file, so you can create your own hierarchy of build dependencies.
 
@@ -517,9 +519,11 @@ Within a `Sakefile`:
 ~~~js
 // defines the CLEAN FileList and 'clean' task
 require("sake/clean");
+CLEAN.include("**/*.js");
 
 // defines the above, and also the CLOBBER FileTask and 'clobber' task
 require("sake/clobber");
+CLOBBER.include("**/*.js");
 ~~~
 
 When the "clean" task is run, it will remove any files that have been included in the `CLEAN FileList`. "clobber" will remove any file, or directory, included in the `CLOBBER FileList`.

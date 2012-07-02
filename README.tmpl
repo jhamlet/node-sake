@@ -391,7 +391,7 @@ task("foo", function (t, amt, word, flag) {
 Including Other <%=ScriptName%> Files
 -------------------------------------
 
-You can include other **<%=scriptName%>** files with the `include` and `load` methods. The included files will be run in the **<%=scriptName%>** context, so any variables they do not declare with the `var` keyword will be set on the global **<%=scriptName%>** context. This allows you to break your project build files up into discreet files.
+You can include other **<%=scriptName%>** files with the `include` and `load` methods. The included files will be run in the **<%=scriptName%>** context, so any variables declared will be set on the global **<%=scriptName%>** context. This allows you to break your project build files up into discreet files. Just be aware of naming collisions.
 
 All `require` and `include`, or `load` statements, are resolved relative to the current file, so you can create your own hierarchy of build dependencies.
 
@@ -485,9 +485,11 @@ Within a `Sakefile`:
 ~~~js
 // defines the CLEAN FileList and 'clean' task
 require("sake/clean");
+CLEAN.include("**/*.js");
 
 // defines the above, and also the CLOBBER FileTask and 'clobber' task
 require("sake/clobber");
+CLOBBER.include("**/*.js");
 ~~~
 
 When the "clean" task is run, it will remove any files that have been included in the `CLEAN FileList`. "clobber" will remove any file, or directory, included in the `CLOBBER FileList`.
