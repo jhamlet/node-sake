@@ -90,7 +90,7 @@ These are installed when **sake** is installed.
 nomnom:    >=1.5.x
 async:     >=0.1.x
 resolve:   >=0.2.x
-proteus:   >=0.0.x
+proteus:   =0.1.x
 wordwrap:  >=0.0.2
 glob:      >=3.1.x
 minimatch: >=0.2.x
