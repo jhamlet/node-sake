@@ -1,7 +1,7 @@
 {   
     "name": "sake",
     "description": "[S]cripted-r[ake] -- a JavaScript build tool similar to rake, or make.",
-    "version": "0.1.25",
+    "version": "0.1.26",
     "keywords": [
         "build",
         "make",
