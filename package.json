@@ -1,7 +1,7 @@
 {   
     "name": "sake",
     "description": "[S]cripted-r[ake] -- a JavaScript build tool similar to rake, or make.",
-    "version": "0.1.28",
+    "version": "0.1.29",
     "keywords": [
         "build",
         "make",
@@ -13,18 +13,18 @@
         "sake": "./bin/sake"
     },
     "dependencies": {
-        "nomnom":       ">=1.5.x",
-        "async":        ">=0.1.x",
-        "resolve":      ">=0.2.x",
-        "proteus":      ">=0.1.x",
-        "wordwrap":     ">=0.0.2",
-        "glob":         ">=3.1.x",
-        "minimatch":    ">=0.2.x"
+        "nomnom":       "=1.5.x",
+        "async":        "=0.1.x",
+        "resolve":      "=0.2.x",
+        "proteus":      "=0.1.x",
+        "wordwrap":     "=0.0.2",
+        "glob":         "=3.1.x",
+        "minimatch":    "=0.2.x"
     },
     "devDependencies": {
-        "mocha":      ">=0.3.x",
-        "should":     ">=0.5.x",
-        "underscore": ">=1.3.x"
+        "mocha":        "=0.3.x",
+        "should":       "=0.5.x",
+        "underscore":   "=1.3.x"
     },
     "bundleDependencies": [
         "sake"
