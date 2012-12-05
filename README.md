@@ -87,13 +87,13 @@ or ".coffee".
 These are installed when **sake** is installed.
 
 ~~~
-nomnom:    >=1.5.x
-async:     >=0.1.x
-resolve:   >=0.2.x
-proteus:   >=0.1.x
-wordwrap:  >=0.0.2
-glob:      >=3.1.x
-minimatch: >=0.2.x
+nomnom:    =1.5.x
+async:     =0.1.x
+resolve:   =0.2.x
+proteus:   =0.1.x
+wordwrap:  =0.0.2
+glob:      =3.1.x
+minimatch: =0.2.x
 ~~~
 
 
@@ -102,9 +102,9 @@ minimatch: >=0.2.x
 Installed when you run `npm link` in the package directory.
 
 ~~~
-mocha:      >=0.3.x
-should:     >=0.5.x
-underscore: >=1.3.x
+mocha:      =0.3.x
+should:     =0.5.x
+underscore: =1.3.x
 ~~~
 
 
