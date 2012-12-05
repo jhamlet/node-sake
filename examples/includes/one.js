@@ -1,7 +1,7 @@
 
 log(">> " + __dirname + " >> " + __filename);
 
-function logNameActionFoo (t) {
+function logNameAction (t) {
     log(t.name + ": foo");
 }
 
