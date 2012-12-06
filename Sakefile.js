@@ -6,7 +6,6 @@ var Path        = require("path"),
     readMeFiles = new FileList(),
     buildComplete
 ;
-
 //---------------------------------------------------------------------------
 // Defines the CLEAN file-list and the 'clean' task
 //---------------------------------------------------------------------------
@@ -55,9 +54,9 @@ readMeFiles.include(
 
 desc("Generate the README.md documentation");
 file("README.md", readMeFiles, function (t) {
-    var _ = require("underscore"),
+    var ejs = require("ejs"),
         pkgInfo = JSON.parse(slurp("package.json", "utf8")),
-        tmpl = _.template(slurp(t.prerequisites[0], "utf8")),
+        tmpl = ejs.compile(slurp(t.prerequisites[0], "utf8")),
         tmplParams = {
             pkg: pkgInfo,
             license: slurp("./LICENSE", "utf8"),
