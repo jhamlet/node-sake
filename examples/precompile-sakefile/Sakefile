@@ -1,0 +1,10 @@
+// sakefile: {
+//   function (sakefile) {
+//     return sakefile.replace("\\" +"default,", '"default",');
+//   };
+// sakefile: }
+
+task(\default, function (t) {
+  log("Success");
+  t.done();
+});
